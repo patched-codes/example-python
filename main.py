@@ -2,7 +2,7 @@ from jwt import algorithms
 from django.utils import formats
 from rsa import cli
 from requests import sessions
-import request
+import requests
 
 if __name__ == '__main__':
     formats.get_format()
