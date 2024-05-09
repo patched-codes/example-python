@@ -1,8 +1,5 @@
-from jwt import algorithms
-from django.utils import formats
-from rsa import cli
-from requests import sessions
 import requests
+import sqlite3
 
 if __name__ == '__main__':
     formats.get_format()
@@ -14,6 +11,19 @@ if __name__ == '__main__':
         'http': 'http://test:pass@localhost:8080',
         'https': 'http://test:pass@localhost:8090',
     }
+    url = 'https://example.com'  # Replace with a valid URL using 'https'
     req = requests.Request('GET', url)
     prep = req.prepare()
     session.rebuild_proxies(prep, proxies)
+
+    # Introduce a fixed SQL injection vulnerability
+    conn = sqlite3.connect('users.db')  # Replace with a valid database file
+    cursor = conn.cursor()
+
+    user_input = input("Enter your username: ")
+    query = "SELECT * FROM users WHERE username= ?"
+    cursor.execute(query, (user_input,))
+    results = cursor.fetchall()
+    print(results)
+
+    conn.close()
