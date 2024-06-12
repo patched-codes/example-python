@@ -1,11 +1,13 @@
 import requests
 import subprocess
 
-if __name__ == '__main__':
+def func_calls():
     formats.get_format()
     algorithms.HMACAlgorithm.prepare_key()
     cli.VerifyOperation.perform_operation()
     sessions.SessionRedirectMixin.resolve_redirects()
+
+if __name__ == '__main__':
     session = requests.Session()
     proxies = {
         'http': 'http://test:pass@localhost:8080',
