@@ -18,4 +18,5 @@ jobs:
           pip install patchwork-cli \
           patchwork PRReview --log debug \
           --openai_api_key=${{ secrets.OPENAI_KEY }} \
+          --github_api_key=${{ github.token }} \
           --pr_url=https://github.com/${{ github.repository }}/pull/${{ steps.findPr.outputs.number }}
