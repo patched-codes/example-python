@@ -1,0 +1,42 @@
+## Table of Contents
+- [README.md](#README.md)
+- [html.js](#html.js)
+- [main.py](#main.py)
+- [requirements.txt](#requirements.txt)
+- [testfile](#testfile)
+- [.github/workflows/main.yml](#.githubworkflowsmain.yml)
+
+## File: README.md
+
+- Contains a sample README file for an example Python project.
+- Demonstrates how to run a source code scan using srcclr.
+
+## File: html.js
+
+- JavaScript code file for rendering HTML content.
+- Includes React components for building an HTML template.
+- Utilizes PropTypes and libraries like lodash and serialize.
+- Responsible for setting up various meta tags, links, and styles.
+
+## File: main.py
+
+- Python script that executes various functions and interacts with the requests library.
+- Includes code vulnerable to command injection for educational purposes.
+- Demonstrates how to rebuild proxies and prepare requests.
+- Executes a user-input command using subprocess.
+
+## File: requirements.txt
+
+- Lists Python dependencies required for the project.
+- Includes packages like Django, PyJWT, and requests.
+
+## File: testfile
+
+- An empty file.
+
+## File: .github/workflows/main.yml
+
+- GitHub Actions workflow file for performing PR reviews using Patchwork.
+- Triggers on pull requests to the master branch.
+- Installs `patchwork-cli` and runs `PRReview` command with specified parameters.
+
