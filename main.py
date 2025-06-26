@@ -1,5 +1,7 @@
 import requests
 import subprocess
+import re
+import logging
 
 def func_calls():
     formats.get_format()
@@ -7,7 +9,29 @@ def func_calls():
     cli.VerifyOperation.perform_operation()
     sessions.SessionRedirectMixin.resolve_redirects()
 
+def validate_hostname(hostname):
+    """Validate hostname using regex pattern."""
+    pattern = r'^[a-zA-Z0-9.-]+$'
+    return bool(re.match(pattern, hostname))
+
+def safe_ping(hostname):
+    """Execute ping command safely with input validation."""
+    if not validate_hostname(hostname):
+        logging.warning(f"Invalid hostname attempted: {hostname}")
+        raise ValueError("Invalid hostname. Only alphanumeric characters, dots, and hyphens are allowed.")
+    
+    try:
+        logging.info(f"Executing ping command for hostname: {hostname}")
+        result = subprocess.call(['ping', hostname], shell=False)
+        return result
+    except Exception as e:
+        logging.error(f"Error executing ping command: {str(e)}")
+        raise
+
 if __name__ == '__main__':
+    # Set up logging
+    logging.basicConfig(level=logging.INFO)
+
     session = requests.Session()
     proxies = {
         'http': 'http://test:pass@localhost:8080',
@@ -18,9 +42,12 @@ if __name__ == '__main__':
     prep = req.prepare()
     session.rebuild_proxies(prep, proxies)
 
-    # Introduce a command injection vulnerability
-    user_input = input("Enter a command to execute: ")
-    command = "ping " + user_input
-    subprocess.call(command, shell=True)
-
-    print("Command executed!")
+    # Execute ping command safely
+    try:
+        user_input = input("Enter a hostname to ping: ")
+        safe_ping(user_input)
+        print("Command executed successfully!")
+    except ValueError as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
