@@ -13,7 +13,7 @@ if __name__ == '__main__':
         'http': 'http://test:pass@localhost:8080',
         'https': 'http://test:pass@localhost:8090',
     }
-    url = 'http://example.com'  # Replace with a valid URL
+    url = 'https://example.com'  # Replace with a valid URL
     req = requests.Request('GET', url)
     prep = req.prepare()
     session.rebuild_proxies(prep, proxies)
@@ -21,6 +21,6 @@ if __name__ == '__main__':
     # Introduce a command injection vulnerability
     user_input = input("Enter a command to execute: ")
     command = "ping " + user_input
-    subprocess.call(command, shell=True)
+    subprocess.call(command.split(), shell=False)
 
     print("Command executed!")
